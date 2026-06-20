@@ -1,174 +1,222 @@
-# Enterprise Network Automation & Operations Dashboard Platform
+<div align="center">
+  <img src="https://img.shields.io/badge/Python-3.11+-blue?style=for-the-badge&logo=python&logoColor=white" alt="Python">
+  <img src="https://img.shields.io/badge/Netmiko-4.3.0-green?style=for-the-badge" alt="Netmiko">
+  <img src="https://img.shields.io/badge/Cisco-IOSv%20%7C%20IOSvL2-blue?style=for-the-badge&logo=cisco&logoColor=white" alt="Cisco">
+  <img src="https://img.shields.io/badge/GNS3-Network%20Simulation-orange?style=for-the-badge" alt="GNS3">
+  <img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge" alt="Status">
+</div>
 
-A multi-branch enterprise network built in **GNS3** and automated end-to-end with **Python + Netmiko** — covering OSPF routing, VLAN segmentation, SSH-based management, configuration backups, compliance auditing, configuration drift detection, and a unified HTML **Network Operations Dashboard**.
+<h1 align="center">🌐 Enterprise Network Automation & Operations Platform</h1>
 
-This started as a CCNA-level lab and grew into a small network operations platform: instead of manually checking each device, a set of Netmiko scripts connects to every router and switch, pulls live state, and renders it into a single dashboard you'd actually want to look at every morning.
+<p align="center">
+  <strong>A multi-branch enterprise network built in GNS3 and fully automated end-to-end with Python & Netmiko.</strong>
+</p>
 
-## Overview
+<p align="center">
+  Covering OSPF routing, VLAN segmentation, SSH-based management, configuration backups, compliance auditing, configuration drift detection, and a unified HTML <b>Network Operations Dashboard</b>.
+</p>
 
-The lab simulates **ABC Company**, with a Headquarters site and two branch offices connected over OSPF, each site segmented into VLANs for users, servers, and management. On top of the network itself, a Python automation layer handles the day-2 operations work: pushing configuration, backing it up, watching for drift between backups, checking compliance against a baseline, and reporting it all in one place.
+---
 
-| | |
+## 📖 Table of Contents
+- [🚀 Overview](#-overview)
+- [🖧 Network Topology](#-network-topology)
+- [✨ Key Features](#-key-features)
+- [🛠️ Tech Stack](#️-tech-stack)
+- [📸 Dashboard Preview](#-dashboard-preview)
+- [📂 Repository Structure](#-repository-structure)
+- [🚀 Getting Started](#-getting-started)
+- [💻 Usage](#-usage)
+- [🛤️ Project Phases](#️-project-phases)
+- [🔮 Future Enhancements](#-future-enhancements)
+- [👨‍💻 Author](#-author)
+
+---
+
+## 🚀 Overview
+
+What started as a standard CCNA-level lab has evolved into a fully-fledged **Network Operations Platform**. Instead of manually logging into devices to verify state, a robust suite of **Netmiko scripts** automatically connects to every router and switch, retrieves live operational data, and renders it into a sleek, unified dashboard.
+
+**The Lab Scenario (ABC Company):**
+- **HQ Site** and two **Branch Offices** connected via **OSPF (Area 0)**.
+- Each site is segmented into specific **VLANs** for Users, Servers, and Management.
+- A **Python automation layer** handles day-2 operations: config pushes, backups, drift detection, and compliance auditing against baselines.
+
+| 🖥️ Environment | ⚙️ Details |
 |---|---|
-| **Lab platform** | GNS3 (run inside the GNS3 VM on VMware Workstation) |
-| **Devices** | 3x Cisco IOSv routers, 2x Cisco IOSvL2 switches, 4x VPCS end hosts |
-| **Routing** | OSPF, single area (Area 0) |
-| **Switching** | VLAN 10 (USERS), VLAN 20 (SERVERS), VLAN 99 (MGMT) |
-| **Management access** | SSH (Netmiko `cisco_ios_telnet` to the lab; SSH config pushed on-box) |
-| **Automation language** | Python 3 + Netmiko |
+| **Lab Platform** | GNS3 (inside GNS3 VM on VMware Workstation) |
+| **Devices** | 3x Cisco IOSv Routers, 2x Cisco IOSvL2 Switches, 4x VPCS |
+| **Routing & Switching** | OSPF (Area 0) \| VLAN 10 (Users), 20 (Servers), 99 (Mgmt) |
+| **Management** | SSH via Netmiko (`cisco_ios_telnet` initially, SSH pushed later) |
 
-## Network Topology
+---
+
+## 🖧 Network Topology
 
 <p align="center">
-  <img src="topology/topology.png" alt="Network topology diagram" width="650">
+  <img src="topology/topology.png" alt="Network topology diagram" width="750" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 </p>
 
-R1-HQ sits at the head of the topology and connects down to two branch routers, R2-BR1 and R3-BR2, each of which connects to its own access switch and a pair of end hosts. A GNS3 Cloud node bridges the Windows host machine to the lab so that the Python scripts (running on the host) can reach the device telnet/SSH ports — it's part of the working lab file, but it's left out of this diagram since it's lab plumbing rather than a network design feature. More detail on that decision is in [`docs/phase3_topology_build.md`](docs/phase3_topology_build.md).
-
-| Site | Subnet | Gateway |
+**Network Subnets:**
+| 📍 Site | 🌐 Subnet | 🚪 Gateway |
 |---|---|---|
-| HQ | 192.168.10.0/24 | 192.168.10.1 |
-| Branch 1 | 192.168.20.0/24 | 192.168.20.1 |
-| Branch 2 | 192.168.30.0/24 | 192.168.30.1 |
+| **Headquarters (HQ)** | `192.168.10.0/24` | `192.168.10.1` |
+| **Branch 1** | `192.168.20.0/24` | `192.168.20.1` |
+| **Branch 2** | `192.168.30.0/24` | `192.168.30.1` |
 
-## Features
+*(Note: A GNS3 Cloud node bridges the Windows host machine to the lab for script access. More details in [`docs/phase3_topology_build.md`](docs/phase3_topology_build.md))*
 
-- Automated device inventory collection across all routers and switches
-- Scheduled, timestamped configuration backups
-- OSPF neighbor health checks with pass/fail reporting
-- Compliance auditing (hostname, local admin account, SSH v2, OSPF presence, password encryption)
-- Per-interface up/down monitoring
-- VLAN deployment automation via Netmiko `send_config_set`
-- Configuration drift detection between any two backup sets
-- A unified, dark-themed **Network Operations Dashboard (V2)** with live status cards, per-device health scoring, compliance/OSPF/VLAN tables, a backup & drift viewer, and a search box with an expandable device explorer
+---
 
-## Tech Stack
+## ✨ Key Features
 
-Cisco IOSv / IOSvL2, GNS3 + GNS3 VM, VMware Workstation, Python 3, Netmiko, OSPF, VLANs, SSH, HTML/CSS/JavaScript (for the dashboard output).
+- 🔍 **Automated Device Inventory**: Automatically collects and categorizes all routers and switches.
+- 💾 **Scheduled Backups**: Reliable, timestamped configuration backups.
+- ❤️ **OSPF Health Checks**: Monitors neighbor adjacencies with clear pass/fail reporting.
+- 🛡️ **Compliance Auditing**: Enforces baselines (hostnames, local admins, SSH v2, OSPF presence, encrypted passwords).
+- 🔌 **Interface Monitoring**: Tracks real-time up/down status per interface.
+- 🚀 **VLAN Deployment**: Automated zero-touch VLAN provisioning via Netmiko `send_config_set`.
+- 📊 **Drift Detection**: Automatically spots configuration drift between any two backup periods.
+- 🖥️ **Unified Operations Dashboard (V2)**: A dark-themed, responsive HTML dashboard featuring live status cards, health scoring, compliance tables, drift viewer, and an interactive device explorer.
 
-## Repository Structure
+---
 
-```
+## 🛠️ Tech Stack
+
+<div align="center">
+  <img src="https://img.shields.io/badge/Cisco-1D51D3?style=for-the-badge&logo=cisco&logoColor=white" alt="Cisco IOSv" />
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python 3" />
+  <img src="https://img.shields.io/badge/Netmiko-00599C?style=for-the-badge" alt="Netmiko" />
+  <img src="https://img.shields.io/badge/GNS3-FFA500?style=for-the-badge" alt="GNS3" />
+  <img src="https://img.shields.io/badge/VMware-607078?style=for-the-badge&logo=vmware&logoColor=white" alt="VMware" />
+  <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5" />
+  <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3" />
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript" />
+</div>
+
+---
+
+## 📸 Dashboard Preview
+
+The flagship component of this project is the **Unified Network Operations Dashboard V2**. It runs asynchronously across all devices, pulling everything it needs, and outputs a stunning static HTML dashboard.
+
+<details>
+  <summary><b>Click to expand Dashboard Screenshots</b></summary>
+  
+  <br/>
+  <b>1. Overview & Status Cards</b>
+  <p align="center"><img src="screenshots/05-dashboard/final-v2/01_overview_status_cards.png" alt="Status Cards" width="800"></p>
+
+  <b>2. Switch Compliance & OSPF Health</b>
+  <p align="center"><img src="screenshots/05-dashboard/final-v2/02_switch_compliance_ospf.png" alt="Switch Compliance" width="800"></p>
+
+  <b>3. VLAN, Backups & Drift Analysis</b>
+  <p align="center"><img src="screenshots/05-dashboard/final-v2/03_vlan_backup_drift.png" alt="VLAN and Backups" width="800"></p>
+
+  <b>4. Device Search & Explorer</b>
+  <p align="center"><img src="screenshots/05-dashboard/final-v2/04_search_device_explorer.png" alt="Device Explorer" width="800"></p>
+</details>
+
+---
+
+## 📂 Repository Structure
+
+```text
 Network-Automation-Platform/
-│
-├── README.md
-├── requirements.txt
-├── LICENSE
-├── .gitignore
-│
-├── topology/
-│   └── topology.png
-│
-├── configs/
-│   ├── router_configs/
-│   └── switch_configs/
-│
-├── scripts/
-│   ├── inventory/
-│   │   └── inventory.py
-│   ├── backups/
-│   │   └── backup_configs.py
-│   ├── monitoring/
-│   │   ├── ospf_health_check.py
-│   │   ├── interface_monitor.py
-│   │   └── compliance_audit.py
-│   ├── automation/
-│   │   ├── deploy_vlans.py
-│   │   └── config_drift.py
-│   └── dashboard/
-│       └── network_operations_dashboard_v2.py
-│
-├── backups/            (generated at runtime)
-├── drift_reports/       (generated at runtime)
-├── reports/             (generated at runtime, dashboard HTML lands here)
-│
-├── screenshots/
-│   ├── 01-setup/
-│   ├── 02-device-images/
-│   ├── 03-topology-build/
-│   ├── 04-automation-scripts/
-│   └── 05-dashboard/
-│
-└── docs/
-    ├── phase1_requirements_and_setup.md
-    ├── phase2_planning_and_design.md
-    ├── phase3_topology_build.md
-    ├── phase4_automation_scripts.md
-    └── phase5_dashboard_evolution.md
+├── 📁 configs/           # Router & switch config templates/files
+├── 📁 scripts/           # Python automation logic
+│   ├── 📁 inventory/     # Device collection
+│   ├── 📁 backups/       # Backup automation
+│   ├── 📁 monitoring/    # OSPF, interfaces, and compliance scripts
+│   ├── 📁 automation/    # VLAN deploy & config drift scripts
+│   └── 📁 dashboard/     # Unified Operations Dashboard generator
+├── 📁 backups/           # ⏳ Generated at runtime
+├── 📁 drift_reports/     # ⏳ Generated at runtime
+├── 📁 reports/           # ⏳ Generated at runtime (HTML dashboard lands here)
+├── 📁 screenshots/       # Project evolution media
+├── 📁 docs/              # Detailed phase-by-phase documentation
+├── 📁 topology/          # Architecture diagrams
+├── 📄 requirements.txt   # Python dependencies
+└── 📄 README.md          # You are here!
 ```
 
-## Dashboard Preview
+---
 
-The flagship piece of this project is the merged **Unified Network Operations Dashboard V2** — it connects once to every device, collects everything it needs, and renders one HTML page.
+## 🚀 Getting Started
 
-<p align="center">
-  <img src="screenshots/05-dashboard/final-v2/01_overview_status_cards.png" alt="Dashboard overview and status cards" width="700">
-</p>
+### 1️⃣ Prerequisites
+- **GNS3 + GNS3 VM** running on VMware Workstation, with the lab topology imported.
+- **Python 3.11+** installed on your host machine.
+- **SSH enabled** with a local admin account configured on every router and switch in the lab.
 
-<p align="center">
-  <img src="screenshots/05-dashboard/final-v2/02_switch_compliance_ospf.png" alt="Switch summary, compliance and OSPF dashboards" width="700">
-</p>
-
-<p align="center">
-  <img src="screenshots/05-dashboard/final-v2/03_vlan_backup_drift.png" alt="VLAN, backup and drift dashboards" width="700">
-</p>
-
-<p align="center">
-  <img src="screenshots/05-dashboard/final-v2/04_search_device_explorer.png" alt="Search and device explorer" width="700">
-</p>
-
-The dashboard didn't start out looking like this — it began as a single basic status table and grew module by module. That evolution, along with the GNS3 setup, lab build, and individual script runs, is documented phase-by-phase in [`docs/`](docs/).
-
-## Getting Started
-
-**Prerequisites**
-
-- GNS3 + GNS3 VM running on VMware Workstation, with the lab topology imported (see [`docs/phase1_requirements_and_setup.md`](docs/phase1_requirements_and_setup.md) and [`docs/phase3_topology_build.md`](docs/phase3_topology_build.md))
-- Python 3.11+
-- SSH enabled and a local admin account configured on every router and switch in the lab
-
-**Install dependencies**
-
+### 2️⃣ Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-**Update device connection details**
+### 3️⃣ Update Device Connection Details
+Each script inside the `scripts/` directory defines its own `routers` / `switches` list (host, port, device type). Update these IP addresses and ports to match your GNS3 topology exposures.
 
-Each script in `scripts/` defines its own `routers` / `switches` list at the top of the file (host, port, device type). Update these to match the telnet/SSH ports your own GNS3 topology exposes before running anything.
+---
 
-## Usage
+## 💻 Usage
 
-Run any script from inside the `scripts/` folder so the relative `../backups`, `../reports`, `../drift_reports` paths resolve correctly.
+It is highly recommended to run any script directly from inside the `scripts/` folder so that relative paths (`../backups`, `../reports`) resolve perfectly.
 
 ```bash
 cd scripts
+
+# 1. Run Core Operations
 python inventory/inventory.py
 python backups/backup_configs.py
+
+# 2. Run Audits & Monitoring
 python monitoring/ospf_health_check.py
 python monitoring/compliance_audit.py
 python monitoring/interface_monitor.py
+
+# 3. Run Automation Scenarios
 python automation/deploy_vlans.py
 python automation/config_drift.py
+
+# 4. Generate the Dashboard
 python dashboard/network_operations_dashboard_v2.py
 ```
+> 🎉 **Pro Tip:** Open the generated `reports/network_operations_dashboard_v2.html` in your favorite web browser to view the final result!
 
-The dashboard script is the one to run last — open the resulting `reports/network_operations_dashboard_v2.html` in any browser.
+---
 
-## Project Phases
+## 🛤️ Project Phases
 
-| Phase | Description |
-|---|---|
-| [Phase 1](docs/phase1_requirements_and_setup.md) | GNS3 / GNS3 VM / VMware setup, Cisco IOSv & IOSvL2 device image installation |
-| [Phase 2](docs/phase2_planning_and_design.md) | Topology design, IP addressing plan, VLAN plan, automation task list |
-| [Phase 3](docs/phase3_topology_build.md) | Building the lab in GNS3, SSH bring-up, IP reachability verification |
-| [Phase 4](docs/phase4_automation_scripts.md) | The Netmiko automation scripts — inventory, backup, OSPF check, compliance audit, interface monitor, VLAN deployment, drift detection |
-| [Phase 5](docs/phase5_dashboard_evolution.md) | From a single status table to the merged Unified Network Operations Dashboard V2 |
+We documented our journey from zero to automated! Check out the phase docs below:
 
-## Future Enhancements
+| 📅 Phase | 📝 Description |
+|:---:|---|
+| [**Phase 1**](docs/phase1_requirements_and_setup.md) | GNS3 / VMware setup & Cisco IOSv image installation. |
+| [**Phase 2**](docs/phase2_planning_and_design.md) | Topology design, IP/VLAN addressing, automation planning. |
+| [**Phase 3**](docs/phase3_topology_build.md) | Building the lab, SSH bring-up, and IP reachability. |
+| [**Phase 4**](docs/phase4_automation_scripts.md) | The Netmiko automation scripts (backups, OSPF, drift). |
+| [**Phase 5**](docs/phase5_dashboard_evolution.md) | Evolution to the Unified Network Operations Dashboard V2. |
 
-A few directions this project could be taken further: a live Flask dashboard with auto-refresh, email/Slack alerts on compliance or OSPF failures, scheduled backups via cron/Task Scheduler, a topology visualization layer, Git-based configuration version control, and a REST API in front of the inventory/health data.
+---
 
-## Author
+## 🔮 Future Enhancements
 
-Built and documented by Mayu as a flagship CCNA-level network automation project, combining Cisco IOS, GNS3, Python, and Netmiko.
+We're always looking to improve! Potential future directions:
+- [ ] 🌐 **Live Flask Dashboard** with auto-refresh capabilities.
+- [ ] 🔔 **Slack/Email Alerts** for compliance drops or OSPF neighbor failures.
+- [ ] ⏱️ **Scheduled Execution** (Cron / Task Scheduler) for zero-touch backups.
+- [ ] 🗺️ **Dynamic Topology Visualization** layer.
+- [ ] 🐙 **Git-Based Version Control** for network configurations.
+- [ ] 🔌 **REST API** exposing the underlying inventory and health data.
+
+---
+
+## 👨‍💻 Author
+
+Built and documented by **Mayur Garje** as a flagship CCNA-level network automation project, seamlessly combining **Cisco IOS, GNS3, Python, and Netmiko**.
+
+<div align="center">
+  <i>If you found this project helpful, don't forget to give it a ⭐!</i>
+</div>
+

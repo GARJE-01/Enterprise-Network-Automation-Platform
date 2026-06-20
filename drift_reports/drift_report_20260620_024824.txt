@@ -1,0 +1,86 @@
+============================================================
+CONFIGURATION DRIFT REPORT
+============================================================
+
+
+============================================================
+DEVICE: R1-HQ.txt
+============================================================
+--- 2026-06-20_02-44-09
++++ 2026-06-20_02-46-15
+@@ -1,9 +1,9 @@
+ Building configuration...
+
+ 
+
+   
+
+-Current configuration : 3476 bytes
+
++Current configuration : 3486 bytes
+
+ !
+
+-! Last configuration change at 01:28:00 UTC Sat Jun 20 2026
+
++! Last configuration change at 01:59:28 UTC Sat Jun 20 2026
+
+ !
+
+ version 15.6
+
+ service timestamps debug datetime msec
+
+@@ -150,7 +150,7 @@
+ * purposes is expressly prohibited except as otherwise authorized by     *
+
+ * Cisco in writing.                                                      *
+
+ **************************************************************************^C
+
+-banner motd ^C^C
+
++banner motd ^CTEST_DRIFT^C
+
+ !
+
+ line con 0
+
+ line aux 0
+
+@@ -161,6 +161,3 @@
+ no scheduler allocate
+
+ !
+
+ end
+
+-
+
+-R1-HQ#
+
+-R1
+
+
+============================================================
+DEVICE: R2-BR1.txt
+============================================================
+NO CHANGES DETECTED
+
+
+============================================================
+DEVICE: R3-BR2.txt
+============================================================
+--- 2026-06-20_02-44-09
++++ 2026-06-20_02-46-15
+@@ -162,3 +162,5 @@
+ no scheduler allocate
+
+ !
+
+ end
+
++
+
++R3-BR2#
+

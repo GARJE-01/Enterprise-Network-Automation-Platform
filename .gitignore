@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Generated/runtime data (recreated by running the scripts)
+backups/*
+!backups/.gitkeep
+drift_reports/*
+!drift_reports/.gitkeep
+reports/*
+!reports/.gitkeep
+
+# OS / editor
+.DS_Store
+.vscode/
+*.log

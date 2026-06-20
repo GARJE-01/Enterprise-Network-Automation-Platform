@@ -1,0 +1,1034 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Network Operations Dashboard</title>
+
+<style>
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 25px;
+    background-color: #f5f5f5;
+}
+
+h1 {
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    margin-bottom: 25px;
+}
+
+th {
+    background-color: #333;
+    color: white;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+details {
+    background: white;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+pre {
+    background: #f0f0f0;
+    padding: 10px;
+    overflow-x: auto;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Network Operations Dashboard</h1>
+
+<p><b>Generated:</b> 2026-06-20 03:19:05.590182</p>
+
+<h2>Network Overview</h2>
+
+<ul>
+<li>Total Devices: 5</li>
+<li>Online Devices: 5</li>
+<li>Routers: 3</li>
+<li>Switches: 2</li>
+</ul>
+
+<h2>Router Summary</h2>
+
+<table>
+
+<tr>
+<th>Router</th>
+<th>Status</th>
+<th>OSPF</th>
+<th>Neighbors</th>
+</tr>
+
+
+        <tr>
+            <td>R1-HQ</td>
+            <td>ONLINE</td>
+            <td>PASS</td>
+            <td>2</td>
+        </tr>
+        
+        <tr>
+            <td>R2-BR1</td>
+            <td>ONLINE</td>
+            <td>PASS</td>
+            <td>1</td>
+        </tr>
+        
+        <tr>
+            <td>R3-BR2</td>
+            <td>ONLINE</td>
+            <td>PASS</td>
+            <td>1</td>
+        </tr>
+        
+
+</table>
+
+<h2>Switch Summary</h2>
+
+<table>
+
+<tr>
+<th>Switch</th>
+<th>Status</th>
+<th>VLAN Count</th>
+</tr>
+
+
+        <tr>
+            <td>Switch</td>
+            <td>ONLINE</td>
+            <td>4</td>
+        </tr>
+        
+        <tr>
+            <td>Switch</td>
+            <td>ONLINE</td>
+            <td>4</td>
+        </tr>
+        
+
+</table>
+
+<h2>Device Details</h2>
+
+
+        <details>
+        <summary><b>R1-HQ</b></summary>
+
+        <h3>Interfaces</h3>
+        <pre>Interface                  IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/0         10.12.12.1      YES NVRAM  up                    up      
+GigabitEthernet0/1         10.13.13.1      YES NVRAM  up                    up      
+GigabitEthernet0/2         172.16.100.1    YES manual up                    up      
+GigabitEthernet0/3         unassigned      YES unset  administratively down down    
+GigabitEthernet0/4         unassigned      YES unset  administratively down down    
+GigabitEthernet0/5         unassigned      YES unset  administratively down down    
+Loopback0                  10.255.255.1    YES manual up                    up      
+R1-HQ#
+R</pre>
+
+        <h3>OSPF Neighbors</h3>
+        <pre>
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+10.255.255.3      1   FULL/BDR        00:00:37    10.13.13.2      GigabitEthernet0/1
+10.255.255.2      1   FULL/BDR        00:00:33    10.12.12.2      GigabitEthernet0/0
+R1-HQ#</pre>
+
+        <h3>Running Configuration</h3>
+        <pre>Building configuration...
+
+  
+Current configuration : 3486 bytes
+!
+! Last configuration change at 01:59:28 UTC Sat Jun 20 2026
+!
+version 15.6
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+!
+hostname R1-HQ
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+ethernet lmi ce
+!
+!
+!
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip domain name ccna.local
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+username admin privilege 15 secret 5 $1$4uJJ$oOXZWr.gYvZZ4QimXtgon.
+!
+redundancy
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 10.255.255.1 255.255.255.255
+!
+interface GigabitEthernet0/0
+ ip address 10.12.12.1 255.255.255.252
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/1
+ ip address 10.13.13.1 255.255.255.252
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/2
+ ip address 172.16.100.1 255.255.255.0
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/3
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/4
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/5
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+router ospf 1
+ network 10.12.12.0 0.0.0.3 area 0
+ network 10.13.13.0 0.0.0.3 area 0
+ network 10.255.255.1 0.0.0.0 area 0
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+ip ssh version 2
+!
+!
+!
+!
+control-plane
+!
+banner exec ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+banner incoming ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+banner login ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+banner motd ^CTEST_DRIFT^C
+!
+line con 0
+line aux 0
+line vty 0 4
+ login local
+ transport input ssh
+!
+no scheduler allocate
+!
+end
+</pre>
+
+        </details>
+        <hr>
+        
+        <details>
+        <summary><b>R2-BR1</b></summary>
+
+        <h3>Interfaces</h3>
+        <pre>Interface                  IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/0         10.12.12.2      YES NVRAM  up                    up      
+GigabitEthernet0/1         192.168.10.1    YES NVRAM  up                    up      
+GigabitEthernet0/2         unassigned      YES unset  administratively down down    
+GigabitEthernet0/3         unassigned      YES unset  administratively down down    
+GigabitEthernet0/4         unassigned      YES unset  administratively down down    
+GigabitEthernet0/5         unassigned      YES unset  administratively down down    
+Loopback0                  10.255.255.2    YES manual up                    up      
+R2-BR1#</pre>
+
+        <h3>OSPF Neighbors</h3>
+        <pre>
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+192.168.20.10     1   FULL/DR         00:00:37    10.12.12.1      GigabitEthernet0/0</pre>
+
+        <h3>Running Configuration</h3>
+        <pre>Building configuration...
+
+  
+Current configuration : 3467 bytes
+!
+! Last configuration change at 01:29:57 UTC Sat Jun 20 2026
+!
+version 15.6
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+!
+hostname R2-BR1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+ethernet lmi ce
+!
+!
+!
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip domain name ccna.local
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+username admin privilege 15 secret 5 $1$IpAS$U3TEA0FkbV2SGFmeDiMqc1
+!
+redundancy
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 10.255.255.2 255.255.255.255
+!
+interface GigabitEthernet0/0
+ ip address 10.12.12.2 255.255.255.252
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/1
+ ip address 192.168.10.1 255.255.255.0
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/2
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/3
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/4
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/5
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+router ospf 1
+ network 10.12.12.0 0.0.0.3 area 0
+ network 10.255.255.2 0.0.0.0 area 0
+ network 192.168.10.0 0.0.0.255 area 0
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+ip ssh version 2
+!
+!
+!
+!
+control-plane
+!
+banner exec ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+banner incoming ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+banner login ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+banner motd ^C^C
+!
+line con 0
+line aux 0
+line vty 0 4
+ login local
+ transport input ssh
+!
+no scheduler allocate
+!
+end
+</pre>
+
+        </details>
+        <hr>
+        
+        <details>
+        <summary><b>R3-BR2</b></summary>
+
+        <h3>Interfaces</h3>
+        <pre>Interface                  IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/0         10.13.13.2      YES NVRAM  up                    up      
+GigabitEthernet0/1         192.168.20.1    YES NVRAM  up                    up      
+GigabitEthernet0/2         unassigned      YES unset  administratively down down    
+GigabitEthernet0/3         unassigned      YES unset  administratively down down    
+GigabitEthernet0/4         unassigned      YES unset  administratively down down    
+GigabitEthernet0/5         unassigned      YES unset  administratively down down    
+Loopback0                  10.255.255.3    YES manual up                    up      </pre>
+
+        <h3>OSPF Neighbors</h3>
+        <pre>
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+192.168.20.10     1   FULL/DR         00:00:37    10.13.13.1      GigabitEthernet0/0
+R3-BR2#</pre>
+
+        <h3>Running Configuration</h3>
+        <pre>Building configuration...
+
+  
+Current configuration : 3467 bytes
+!
+! Last configuration change at 01:30:20 UTC Sat Jun 20 2026
+!
+version 15.6
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+!
+hostname R3-BR2
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+ethernet lmi ce
+!
+!
+!
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip domain name ccna.local
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+username admin privilege 15 secret 5 $1$WNYd$R50pKBMW7LWj5DO1.zFrx.
+!
+redundancy
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 10.255.255.3 255.255.255.255
+!
+interface GigabitEthernet0/0
+ ip address 10.13.13.2 255.255.255.252
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/1
+ ip address 192.168.20.1 255.255.255.0
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/2
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/3
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/4
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/5
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+router ospf 1
+ network 10.13.13.0 0.0.0.3 area 0
+ network 10.255.255.3 0.0.0.0 area 0
+ network 192.168.20.0 0.0.0.255 area 0
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+ip ssh version 2
+!
+!
+!
+!
+control-plane
+!
+banner exec ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+banner incoming ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+banner login ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+banner motd ^C^C
+!
+line con 0
+line aux 0
+line vty 0 4
+ login local
+ transport input ssh
+!
+no scheduler allocate
+!
+end
+
+R3-BR2#</pre>
+
+        </details>
+        <hr>
+        
+        <details>
+        <summary><b>Switch</b></summary>
+
+        <h3>Interfaces</h3>
+        <pre>Interface              IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/0     unassigned      YES unset  up                    up      
+GigabitEthernet0/1     unassigned      YES unset  up                    up      
+GigabitEthernet0/2     unassigned      YES unset  up                    up      
+GigabitEthernet0/3     unassigned      YES unset  down                  down    
+GigabitEthernet1/0     unassigned      YES unset  down                  down    
+GigabitEthernet1/1     unassigned      YES unset  down                  down    
+GigabitEthernet1/2     unassigned      YES unset  down                  down    
+GigabitEthernet1/3     unassigned      YES unset  down                  down    </pre>
+
+        <h3>VLAN Information</h3>
+        <pre>
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Gi0/0, Gi0/1, Gi0/2, Gi0/3, Gi1/0, Gi1/1, Gi1/2, Gi1/3
+10   USERS                            active    
+20   SERVERS                          active    
+99   MGMT                             active    
+1002 fddi-default                     act/unsup 
+1003 token-ring-default               act/unsup 
+1004 fddinet-default                  act/unsup 
+1005 trnet-default                    act/unsup 
+Switch#</pre>
+
+        <h3>Running Configuration</h3>
+        <pre>Building configuration...
+
+Current configuration : 2980 bytes
+!
+! Last configuration change at 01:49:14 UTC Sat Jun 20 2026
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+service compress-config
+!
+hostname Switch
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet0/1
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet0/2
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet0/3
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/0
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/1
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/2
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/3
+ media-type rj45
+ negotiation auto
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+!
+!
+control-plane
+!
+banner exec ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+banner incoming ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+banner login ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+!
+line con 0
+line aux 0
+line vty 0 4
+!
+!
+end
+
+Switch#</pre>
+
+        </details>
+        <hr>
+        
+        <details>
+        <summary><b>Switch</b></summary>
+
+        <h3>Interfaces</h3>
+        <pre>Interface              IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/0     unassigned      YES unset  up                    up      
+GigabitEthernet0/1     unassigned      YES unset  up                    up      
+GigabitEthernet0/2     unassigned      YES unset  up                    up      
+GigabitEthernet0/3     unassigned      YES unset  down                  down    
+GigabitEthernet1/0     unassigned      YES unset  down                  down    
+GigabitEthernet1/1     unassigned      YES unset  down                  down    
+GigabitEthernet1/2     unassigned      YES unset  down                  down    
+GigabitEthernet1/3     unassigned      YES unset  down                  down    
+Switch#</pre>
+
+        <h3>VLAN Information</h3>
+        <pre>
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Gi0/0, Gi0/1, Gi0/2, Gi0/3, Gi1/0, Gi1/1, Gi1/2, Gi1/3
+10   USERS                            active    
+20   SERVERS                          active    
+99   MGMT                             active    
+1002 fddi-default                     act/unsup 
+1003 token-ring-default               act/unsup 
+1004 fddinet-default                  act/unsup 
+1005 trnet-default                    act/unsup 
+Switch#</pre>
+
+        <h3>Running Configuration</h3>
+        <pre>Building configuration...
+
+Current configuration : 2980 bytes
+!
+! Last configuration change at 01:49:25 UTC Sat Jun 20 2026
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+service compress-config
+!
+hostname Switch
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet0/1
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet0/2
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet0/3
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/0
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/1
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/2
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet1/3
+ media-type rj45
+ negotiation auto
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+!
+!
+control-plane
+!
+banner exec ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+banner incoming ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+banner login ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+!
+line con 0
+line aux 0
+line vty 0 4
+!
+!
+end
+</pre>
+
+        </details>
+        <hr>
+        
+
+</body>
+</html>

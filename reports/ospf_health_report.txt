@@ -1,0 +1,17 @@
+========================================
+OSPF HEALTH REPORT
+Generated: 2026-06-20 02:01:27.666363
+========================================
+
+Device    : R1-HQ
+Neighbors : 2
+Status    : PASS
+------------------------------
+Device    : R2-BR1
+Neighbors : 1
+Status    : PASS
+------------------------------
+Device    : R3-BR2
+Neighbors : 1
+Status    : PASS
+------------------------------

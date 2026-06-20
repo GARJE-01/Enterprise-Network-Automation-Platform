@@ -1,0 +1,34 @@
+==================================================
+INTERFACE STATUS REPORT
+Generated: 2026-06-20 02:25:32.162442
+==================================================
+
+R1-HQ
+--------------------------------------------------
+GigabitEthernet0/0   up              up         PASS
+GigabitEthernet0/1   up              up         PASS
+GigabitEthernet0/2   up              up         PASS
+GigabitEthernet0/3   down            down       FAIL
+GigabitEthernet0/4   down            down       FAIL
+GigabitEthernet0/5   down            down       FAIL
+Loopback0            up              up         PASS
+
+R2-BR1
+--------------------------------------------------
+GigabitEthernet0/0   up              up         PASS
+GigabitEthernet0/1   up              up         PASS
+GigabitEthernet0/2   down            down       FAIL
+GigabitEthernet0/3   down            down       FAIL
+GigabitEthernet0/4   down            down       FAIL
+GigabitEthernet0/5   down            down       FAIL
+Loopback0            up              up         PASS
+
+R3-BR2
+--------------------------------------------------
+GigabitEthernet0/0   up              up         PASS
+GigabitEthernet0/1   up              up         PASS
+GigabitEthernet0/2   down            down       FAIL
+GigabitEthernet0/3   down            down       FAIL
+GigabitEthernet0/4   down            down       FAIL
+GigabitEthernet0/5   down            down       FAIL
+Loopback0            up              up         PASS

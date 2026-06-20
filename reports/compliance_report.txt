@@ -1,0 +1,28 @@
+==================================================
+NETWORK COMPLIANCE REPORT
+Generated: 2026-06-20 02:20:29.238948
+==================================================
+
+R1-HQ
+----------------------------------------
+Hostname                  PASS
+Username Admin            PASS
+SSH Version 2             PASS
+OSPF Configured           PASS
+Password Encryption       PASS
+
+R2-BR1
+----------------------------------------
+Hostname                  PASS
+Username Admin            PASS
+SSH Version 2             PASS
+OSPF Configured           PASS
+Password Encryption       PASS
+
+R3-BR2
+----------------------------------------
+Hostname                  PASS
+Username Admin            PASS
+SSH Version 2             PASS
+OSPF Configured           PASS
+Password Encryption       PASS

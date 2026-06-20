@@ -1,0 +1,24 @@
+============================================================
+NETWORK HEALTH DASHBOARD
+============================================================
+
+Device      : R1-HQ
+Status      : ONLINE
+OSPF        : PASS
+Compliance  : PASS
+Interfaces  : 4 UP / 3 DOWN
+------------------------------------------------------------
+Device      : R2-BR1
+Status      : ONLINE
+OSPF        : PASS
+Compliance  : PASS
+Interfaces  : 3 UP / 4 DOWN
+------------------------------------------------------------
+Device      : R3-BR2
+Status      : ONLINE
+OSPF        : PASS
+Compliance  : PASS
+Interfaces  : 3 UP / 4 DOWN
+------------------------------------------------------------
+
+Generated: 2026-06-20 03:00:14.588336

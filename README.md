@@ -123,6 +123,7 @@ The flagship component of this project is the **Unified Network Operations Dashb
 
 ```text
 Network-Automation-Platform/
+├── 📄 Network_Automation.gns3                     # The main GNS3 lab project file
 ├── 📁 configs/           # Router & switch config templates/files
 ├── 📁 scripts/           # Python automation logic
 │   ├── 📁 inventory/     # Device collection
@@ -144,12 +145,16 @@ Network-Automation-Platform/
 
 ## 🚀 Getting Started
 
-### 1️⃣ Prerequisites
-- **GNS3 + GNS3 VM** running on VMware Workstation, with the lab topology imported.
+### 1️⃣ Prerequisites & Lab Setup
+- **GNS3 + GNS3 VM** running on VMware Workstation.
 - **Python 3.11+** installed on your host machine.
-- **SSH enabled** with a local admin account configured on every router and switch in the lab.
 
-### 2️⃣ Install Dependencies
+### 2️⃣ Import the Lab
+1. **Provide Images:** You must legally obtain your own Cisco IOSv and IOSvL2 images (e.g., from a CML subscription) and import them into your GNS3 VM.
+2. **Open Project:** Open the provided `Network_Automation.gns3` project file within GNS3 to load the full multi-branch topology. The devices should map to your imported images.
+3. **Verify Access:** Ensure SSH is enabled with a local admin account configured on every router and switch in the lab.
+
+### 3️⃣ Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
@@ -219,4 +224,3 @@ Built and documented by **Mayur Garje** as a flagship CCNA-level network automat
 <div align="center">
   <i>If you found this project helpful, don't forget to give it a ⭐!</i>
 </div>
-

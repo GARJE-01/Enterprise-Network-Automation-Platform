@@ -16,3 +16,6 @@ reports/*
 .DS_Store
 .vscode/
 *.log
+
+# Large binaries / VM images
+*.vmdk
